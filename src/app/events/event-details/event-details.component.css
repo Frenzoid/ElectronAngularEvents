@@ -1,0 +1,9 @@
+agm-map{
+  height: 500px;
+}
+
+#address{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

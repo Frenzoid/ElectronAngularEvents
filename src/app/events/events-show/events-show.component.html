@@ -1,0 +1,25 @@
+
+<nav class="navbar navbar-light bg-light justify-content-between mt-3">
+  <nav class="navbar navbar-light bg-light justify-content-between mt-3">
+    <ul class="nav nav-pills">
+      <li class="nav-item">
+        <a class="nav-link" (click)="orderDate()">Order by date</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" (click)="orderPrice()">Order by price</a>
+      </li>
+    </ul>
+    <form class="form-inline">
+      <input class="form-control mr-sm-2" [(ngModel)]="filterSearch"  type="text" name="searchEvent" placeholder="Search" aria-label="Search">
+    </form>
+  </nav>
+</nav>
+
+<div id="eventsContainer">
+  <div class="row">
+    <ae-event-item class="card mt-4" [ngClass]="{'col-6': true}"
+    *ngFor="let event of events | eventFilter:filterSearch; let i = index" [event]="event"
+      (deleted)="deleteEvent(i)">
+    </ae-event-item>
+  </div>
+</div>

@@ -1,0 +1,74 @@
+<form class="mt-4" (ngSubmit)="submitToServer()" #addForm="ngForm">
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" class="form-control" name="title" [(ngModel)]="newEvent.title" placeholder="Enter name" minlength="5"
+      #title="ngModel" required minlength="5" #description="ngModel" [ngClass]="validClasses(title, 'is-valid', 'is-invalid')">
+    <div *ngIf="title.touched && title.invalid" class="alert alert-danger">
+      Title is required and must be atleast 5 characters long.
+    </div>
+  </div>
+
+
+  <div class="form-group">
+    <label for="date">Date</label>
+    <input type="date" class="form-control" name="date" id="date" [(ngModel)]="newEvent.date" required #date="ngModel" [apMinDate]="minDate"
+      [ngClass]="{'is-valid': date.touched && date.valid, 'is-invalid': date.touched && date.invalid}">
+    <div *ngIf="date.touched && date.invalid && date.errors.minDate" class="alert alert-danger">
+      The minimum date is {{date.errors.minDate}}
+    </div>
+
+    <div *ngIf="date.touched && date.invalid && date.value == ''" class="alert alert-danger">
+      A date is required.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="description">Description</label>
+    <textarea class="form-control" id="description" name="description" rows="3" [(ngModel)]="newEvent.description" required #description="ngModel"
+      [ngClass]="{'is-valid': description.touched && description.valid, 'is-invalid': description.touched && description.invalid}">
+    </textarea>
+    <div *ngIf="description.touched && description.invalid" class="alert alert-danger">
+      Description is required.
+    </div>
+  </div>
+
+
+  <div class="form-group">
+    <label for="price">Price (in €)</label>
+    <input type="number" [(ngModel)]="newEvent.price" class="form-control" name="price" placeholder="Price" required #price="ngModel"
+      [ngClass]="{'is-valid': price.touched && price.valid, 'is-invalid': price.touched && (price.invalid || !price.value)}">
+    <div *ngIf="price.touched && (price.invalid || !price.value)" class="alert alert-danger">
+      Price cant be 0.
+    </div>
+  </div>
+
+  <p *ngIf="errors != ''"class="text-danger" id="errorInfo">{{errors}}</p>
+
+  {{addForm.invalid | json}}
+
+
+  <div class="form-group">
+    <label for="image">Image</label>
+    <input type="file" class="form-control" name="img" #fileImage (change)="changeImage(fileImage)"
+    [ngClass]="{'is-valid': fileImage.files.length || editing == 'save', 'is-invalid': !fileImage.files.length && editing != 'save'}">
+  </div>{{editing}}
+  <img #image [src]="newEvent.image" alt="" class="img-thumbnail">
+  <button type="submit" class="btn btn-primary mr-3" [disabled]="addForm.invalid || (!fileImage.files.length && editing == 'create') || !price.value">
+  {{editing}} </button>
+  <button type="button" class="btn btn-danger" (click)="cancelAddProd()"> Cancel </button>
+  <div class="card-header">
+    <div class="form-group">
+      <label for="address">Address</label>
+      <input type="text" amGmapsAutocomplete (placeChanged)="changePosition($event)" class="form-control" id="address" name="address"
+        [(ngModel)]="newEvent.address" required #address="ngModel" [ngClass]="{'is-valid': address.touched && address.valid, 'is-invalid': address.touched && address.invalid}">
+    </div>
+  </div>
+  <div *ngIf="address.touched && address.invalid" class="alert alert-danger">
+    Address is required.
+  </div>
+  <div class="card-body">
+    <agm-map [latitude]="newEvent.lat" [longitude]="newEvent.lng" [zoom]="17">
+      <agm-marker [latitude]="newEvent.lat" [longitude]="newEvent.lng"></agm-marker>
+    </agm-map>
+  </div>
+</form>

@@ -1,0 +1,33 @@
+<form action="#" id="form-login" class="mt-4" (ngSubmit)="authToServer()" method="POST" role="form">
+  <legend>Welcome to SV Tickets!</legend>
+
+  <div class="form-group">
+    <label for="correo">Email or Nickname:</label>
+    <input [(ngModel)]="user.email" [(ngModel)]="user.name" type="email" class="form-control" name="email" id="email" placeholder="Email">
+    <label for="password">Password:</label>
+    <input [(ngModel)]="user.password" type="password" class="form-control" name="password" id="password" placeholder="Password">
+  </div>
+  <p class="text-danger" id="errorInfo"></p>
+
+  <button type="submit" class="btn btn-primary">Login</button>
+
+  <a class="btn btn-secondary" [routerLink]="['/auth/register']" role="button">Create account</a>
+
+  <p *ngIf="error != ''" class="text-danger" id="errorInfo">{{error}}</p>
+
+</form>
+
+
+<div class="card mt-4">
+  <div class="card-header">External login: </div>
+  <div class="card-body">
+    <button alFbLogin [scopes]="['email', 'public_profile']" class="btn btn-primary" (loginOk)="loggedFacebook($event)" (loginError)="showError($event)">
+      <i class="fa fa-facebook"></i>
+      Facebook
+    </button>
+
+    <button alGoogleLogin type="button" class="btn btn-danger" (loginOk)="loggedGoogle($event)" (loginError)="showError($event)">
+      <i class="fa fa-google-plus-square"></i>
+      Google
+    </button>
+  </div>

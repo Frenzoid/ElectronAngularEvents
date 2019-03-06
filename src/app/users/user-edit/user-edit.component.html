@@ -1,0 +1,50 @@
+  <form action="#" id="form-profile" class="mt-4" role="form" #dataForm="ngForm">
+    <legend>Edit profile</legend>
+
+    <div class="form-group" >
+      <label for="correo">Email:</label>
+      <input type="email" #email class="form-control" [(ngModel)]="user.email" name="email" id="email" placeholder="Email"
+      [ngClass]="{'is-valid': email.touched && email.valid, 'is-invalid': email.touched && email.invalid}">
+
+      <label for="name">Name:</label>
+      <input type="text" #name class="form-control" name="nameUser" [(ngModel)]="user.name" id="name" placeholder="Name"
+      [ngClass]="{'is-valid': name.touched && name.valid, 'is-invalid': name.touched && name.invalid}">
+
+    </div>
+
+    <p class="text-danger" id="errorInfo1">{{usrDataErr}}</p>
+    <p class="text-success" id="okInfo1">{{usrDataDone}}</p>
+    <button type="submit" (click)="updateUserData()" [disabled]="dataForm.invalid" class="btn btn-primary">Edit profile</button>
+  </form>
+
+  <form action="#" id="form-avatar" class="mt-4" method="POST" role="form" #avatarForm="ngForm">
+    <legend>Edit avatar</legend>
+      <div class="form-group">
+          <label for="image">Avatar</label>
+          <input type="file" class="form-control" name="img" #fileImage (change)="changeImage(fileImage)">
+      </div>
+    <div class="row">
+      <div class="col" class="w-100">
+          <img #image [src]="user.avatar" alt="" class="img-thumbnail">
+      </div>
+      <div class="col">
+          <img *ngIf="avatar !== ''" [src]='avatar' class="w-100" src="" alt="" id="imgPreview">
+      </div>
+    </div>
+    <p class="text-danger" id="errorInfo2">{{usrAvaErr}}</p>
+    <p class="text-success" id="okInfo2">{{usrAvaDone}}</p>
+    <button type="submit" (click)="updateUserAvatar()" [disabled]="fileImage.invalid" class="btn btn-primary">Edit avatar</button>
+  </form>
+
+  <form action="#" id="form-password" class="mt-4" method="POST" role="form" #credentialsForm="ngForm">
+    <legend>Edit password</legend>
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input type="password" class="form-control" [(ngModel)]="user.password" name="password" id="password" placeholder="Password">
+      <label for="password2">Repeat password:</label>
+      <input type="password" class="form-control" [(ngModel)]="password2" name="password2" id="password2" placeholder="Repeat password">
+    </div>
+    <p class="text-danger" id="errorInfo3">{{usrCredErr}}</p>
+    <p class="text-success" id="okInfo3">{{usrCredDone}}</p>
+    <button type="submit" (click)="updateUserCreds()" [disabled]="credentialsForm.invalid" class="btn btn-primary">Edit password</button>
+  </form>

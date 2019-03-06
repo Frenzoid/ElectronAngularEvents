@@ -1,0 +1,18 @@
+<div id="profile">
+  <div class="row mt-4">
+      <div class="col-3">
+          <img class="w-100" id="avatar" src="{{user.avatar}}" alt="">
+      </div>
+      <div class="col-9">
+          <h4>{{user.name}}</h4>
+          <h4>
+              <small class="text-muted">{{user.email}}</small>
+          </h4>
+          <p *ngIf="user.me">
+              <a [routerLink]="['/profile/edit']" class="btn btn-primary">Edit profile</a>
+          </p>
+          <a [routerLink]="['/events/user', user.id]" class="btn btn-warning">Show Events</a>
+      </div>
+  </div>
+</div>
+<div class="mt-4" id="map"></div>

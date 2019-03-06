@@ -1,0 +1,42 @@
+<div id="cardContainer" class="mt-4">
+    <ae-event-item [ngClass]="{'col-6': false}" class="card mt-4"
+      [event]="event"
+      (deleted)="deleteEvent()">
+    </ae-event-item>
+    <div class="form-group">
+      <label for="price">Amount</label>
+      <input type="number" [(ngModel)]="amount" class="form-control" name="price" placeholder="Price" required #ammount="ngModel"
+      [ngClass]="{'is-valid': ammount.touched && ammount.valid, 'is-invalid': ammount.touched && (ammount.invalid || !ammount.value)}">
+      <div *ngIf="ammount.touched && (ammount.invalid || !ammount.value)" class="alert alert-danger">
+        Amount cant be 0.
+      </div>
+    </div>
+    <p>
+      <ap-paypal-button  id="payPalButton" [amount]="event.price * amount" (paymentCompleted)="getPayment($event)"></ap-paypal-button>
+      <span>Total price: {{event.price * amount}} eur</span>
+    </p>
+
+    <div *ngIf="payedMessage != ''" class=" alert alert-success">
+      <strong>Success!</strong>  {{payedMessage}}
+    </div>
+
+    <div *ngIf="paymentCanceledMessage != ''" class="alert alert-danger">
+      <strong>Canceled!</strong> {{paymentCanceledMessage}}
+    </div>
+
+</div>
+
+<ul *ngIf="attendents.length != 0" class="list-group mt-4 mb-4" id="userList">
+  <li class="list-group-item active">Attendees to the event</li>
+  <ae-user-attend-card  *ngFor="let attendant of attendents"  [user]="attendant">
+  </ae-user-attend-card>
+</ul>
+
+<div class="card mt-4">
+  <div class="card-header" id="address"><div>Address: {{event.address}}</div><div clas="distance">Distance: {{event.distance}} kms</div></div>
+  <div class="card-body">
+  <agm-map [latitude]="event.lat" [longitude]="event.lng" [zoom]="17">
+    <agm-marker [latitude]="event.lat" [longitude]="event.lng"></agm-marker>
+  </agm-map>
+  </div>
+</div>
