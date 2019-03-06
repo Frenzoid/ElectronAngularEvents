@@ -35,7 +35,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HttpClientModule,
     MenuModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyC2sYQIcXgK0jbglbKQHc_ImsBieJwohHQ',
+      apiKey: 'YOUR API KEY',
       libraries: ['places']
     }),
     RouterModule.forRoot(APP_ROUTES,  {preloadingStrategy: PreloadAllModules, enableTracing: true}, )
